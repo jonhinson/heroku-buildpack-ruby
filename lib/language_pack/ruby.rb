@@ -87,6 +87,7 @@ class LanguagePack::Ruby < LanguagePack::Base
       setup_language_pack_environment
       setup_export
       setup_profiled
+      install_pdflib
       allow_git do
         install_bundler_in_app
         build_bundler
@@ -384,6 +385,12 @@ Note: Only the most recent version of Ruby 2.1 is supported on Cedar-14
 ERROR
     end
     error message
+  end
+
+  def install_pdflib
+    instrument 'ruby.install_pdflib' do
+      FileUtils.cp('vendor/files/PDFlib.so', "#{slug_vendor_ruby}/lib/ruby/site_ruby/1.9.1/PDFlib.so")
+    end
   end
 
   def new_app?
